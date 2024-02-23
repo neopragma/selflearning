@@ -1,6 +1,6 @@
 # SelfLearning Roadmap 
 
-This is a collection of HTML documents intended to guide people who want to learn about computer-related topics on their own, based mainly on resources available on the Internet and in books. 
+This is a collection of information intended to guide people who want to learn about computer-related topics on their own, based mainly on resources available on the Internet and in books. The files in this repository are the source for a static HTML site.
 
 The idea is that you choose the topic you want to learn about and (in most cases) the level of detail you're insterested in, and the relevant page will suggest resources and a sequence for study and practice to help you achieve that goal. The page will also contain links to prerequisite knowledge and skills which you can follow at your own discretion if you feel you need preparation for learning the topic of interest.
 
