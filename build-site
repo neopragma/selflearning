@@ -1,0 +1,6 @@
+#!/bin/bash 
+
+build-html index 'Self-Learning Roadmap'
+build-html about 'About This Resource'
+build-html topics 'Topics'
+build-html literacy 'Computer Literacy'

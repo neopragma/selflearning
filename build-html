@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# build-html
+#
+# Assemble an html document from standard parts.
+#
+# $1 = filename for page, like 'mypage', will become 'html/mypage.html'.
+#      Content is expected to be found at 'content/mypage_content.html'.
+#      The navigation section of the page is expected at 'content/mypage_nav.html'
+#      The navigation file is optional.
+#
+# $2 = page title for 'mypage'. Will go into the <title> and <h1> elements.
+#
+# The resulting html document is assembled in the following order:
+#
+# 1. common_top.html        from ./templates/common_top.html
+# 2. pagename_nav.html      from ./content/pagename_nav.md
+# 3. common_body.html       from ./templates/common_body.html
+# 4. pagename_content.html  from ./content/pagename_content.md
+# 5. common_bottom.html     from ./templates/common_bottom.html
+#
+# Result goes in ./html/pagename.html
+#
+# Dependencies
+#
+# 1. markdown package. Converts a markdown document to html.
+# 2. replace function. Changes one string value to another in all
+#    files starting in the current directory. Recursive.
+
+PAGENAME="$1"
+PAGETITLE="$2"
+
+echo "Building page ${PAGENAME}.html"
+
+. replace
+cp templates/common_top.html html/.
+test -f "content/${PAGENAME}_nav.md" && markdown "content/${PAGENAME}_nav.md" > "html/${PAGENAME}_nav.html" || touch "html/${PAGENAME}_nav.html"
+cp templates/common_body.html html/.
+markdown "content/${PAGENAME}_content.md" > "html/${PAGENAME}_content.html"
+cp templates/common_bottom.html html/.
+pushd html >/dev/null
+$(replace '$PageTitle' "${PAGETITLE}")
+cat common_top.html "${PAGENAME}_nav.html" common_body.html "${PAGENAME}_content.html" common_bottom.html > "${PAGENAME}.html"
+rm common_top.html
+rm "${PAGENAME}_nav.html"
+rm common_body.html
+rm "${PAGENAME}_content.html"
+rm common_bottom.html
+popd >/dev/null
